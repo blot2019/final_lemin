@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_stuff.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/15 15:48:34 by lcaesar           #+#    #+#             */
+/*   Updated: 2020/02/15 15:49:46 by lcaesar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ants.h"
 #include "function_prototypes.h"
 #include "lemin.h"
@@ -36,7 +48,7 @@ void		get_adjacency_stacks_from_structure(t_node **nodes, t_lemin *lemin)
 		while (current_link)
 		{
 			node_stack_item =
-            new_node_stack_item(nodes[current_link->link->index]);
+			new_node_stack_item(nodes[current_link->link->index]);
 			if (m == 0)
 				stack = new_stack(node_stack_item, node_stack_item, 1);
 			else
@@ -56,8 +68,8 @@ t_colony	*get_colony(t_lemin lemin)
 	colony = mallokill(sizeof(struct s_colony));
 	colony->number_of_ants = lemin.ant_count;
 	colony->number_of_paths = -1;
-//	colony->m = -1;
-//	colony->m_prime = -1;
+	colony->m = -1;
+	colony->m_prime = -1;
 	colony->current_running_time = -1;
 	colony->min_running_time = -1;
 	colony->distance_to = -1;

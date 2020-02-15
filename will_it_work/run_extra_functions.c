@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_extra_functions.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/15 15:51:09 by lcaesar           #+#    #+#             */
+/*   Updated: 2020/02/15 16:04:17 by lcaesar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ants.h"
 #include "function_prototypes.h"
 
@@ -8,6 +20,25 @@ void	set_minimum(t_colony *colony)
 	colony->m_prime = colony->m;
 	destroy_path_list(&colony->optimal_flow, 0);
 	colony->optimal_flow = copy_flow(colony->current_flow);
+}
+
+void	saturate_and_distribute_mk2(t_colony *colony,
+        t_path_list *paths, int *index, int numerical)
+{
+	if (numerical)
+	{
+		// colony->m = saturate_paths_numerically(colony, paths);
+		// distribute_ants_uniformly_numerically(colony, paths, colony->m);
+		*index = saturate_paths_numerically(colony, paths);
+		distribute_ants_uniformly_numerically(colony, paths, *index);
+	}
+	else
+	{
+		// colony->m_prime = saturate_paths(colony, paths);
+		// distribute_ants_uniformly(colony, paths, colony->m_prime);
+		*index = saturate_paths(colony, paths);
+		distribute_ants_uniformly(colony, paths, *index);
+	}
 }
 
 void	saturate_and_distribute(t_colony *colony,
