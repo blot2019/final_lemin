@@ -25,6 +25,7 @@ int			remember_room_name(char *str, char **room_name, int *i)
 		return (0);
 	while (str[*i] && (*i) < end)
 		(*room_name)[j++] = str[(*i)++];
+	(*room_name)[j++] = '\0';
 	return (1);
 }
 
