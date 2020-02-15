@@ -64,6 +64,7 @@ int		lets_read(t_lemin *lemin, char *map)
 	if (search_void_string(input))
 	{
 		free(input);
+		lemin->initial_text = NULL;
 		return (0);
 	}
 	spl = ft_strsplit(input, '\n');

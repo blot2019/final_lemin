@@ -107,7 +107,8 @@ int			main(int arg_count, char **arg_values)
 
 	if (!lets_read(&lemin, feel_map_file(arg_count, arg_values, &lemin)))
 	{
-		free_for_all(&lemin);
+		if (lemin.initial_text)
+			free_for_all(&lemin);
 		return (err_out());
 	}
 	print_initial_text(lemin.initial_text);
