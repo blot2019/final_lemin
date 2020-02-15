@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/15 16:35:00 by lcaesar           #+#    #+#             */
+/*   Updated: 2020/02/15 17:06:31 by lcaesar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ants.h"
 #include "function_prototypes.h"
 #include "lemin.h"
@@ -15,8 +27,8 @@ static void	initialize_stuff(t_colony *colony)
 	initialize_the_flow_netowrk(colony, colony->current_flow);
 	unplug_all_paths(colony->current_flow);
 	colony->optimal_flow = copy_flow(colony->current_flow);
-	saturate_and_distribute(colony, colony->optimal_flow, 1);
-	colony->min_running_time = estimate_running_time_mk2(colony->optimal_flow);
+	saturate_and_distribute_mk2(colony, colony->current_flow, &colony->m, 1);
+	colony->min_running_time = estimate_running_time_mk2(colony->current_flow);
 	colony->current_running_time = colony->min_running_time;
 	colony->m_prime = colony->m;
 }
@@ -24,61 +36,57 @@ static void	initialize_stuff(t_colony *colony)
 static void	get_solution_in_the_first_approximation(t_colony *colony)
 {
 	while (1)
-    {
-        reset_everything(colony);
-        colony->residual_path =
+	{
+		reset_everything(colony);
+		colony->residual_path =
 		new_path(naive_bfs(colony->start, colony->finish, 2));
-        wipe_graph(colony->nodes);
-        if (!colony->residual_path)
+		wipe_graph(colony->nodes);
+		if (!colony->residual_path)
 			break ;
-        superimpose(colony, colony->residual_path, 0);
+		superimpose(colony, colony->residual_path, 0);
 		destroy_path_list(&colony->current_flow, 0);
-        colony->current_flow = get_flow_paths(colony, 1);
-        unplug_all_paths(colony->current_flow);
-		//
+		colony->current_flow = get_flow_paths(colony, 1);
+		unplug_all_paths(colony->current_flow);
 		reset_paths(colony->current_flow);
-		saturate_and_distribute(colony, colony->current_flow, 1);
-		//
-        colony->current_running_time =
+		saturate_and_distribute_mk2(colony, colony->current_flow, &colony->m, 1);
+		colony->current_running_time =
 		estimate_running_time_mk2(colony->current_flow);
-        if (colony->current_running_time < colony->min_running_time)
+		if (colony->current_running_time < colony->min_running_time)
 			set_minimum(colony);
 		else if (colony->current_running_time > colony->min_running_time)
 		{
 			destroy_path(&colony->residual_path);
 			break ;
 		}
-        destroy_path(&colony->residual_path);
-    }
+		destroy_path(&colony->residual_path);
+	}
 }
 
 static void	refine_solution_via_pivots(t_colony *colony)
 {
 	while (1)
-    {
-        reset_everything(colony);
+	{
+		reset_everything(colony);
 		block_pivots(colony->active_pivots, 1);
-        colony->residual_path =
+		colony->residual_path =
 		new_path(naive_bfs(colony->start, colony->finish, 2));
-        wipe_graph(colony->nodes);
-        if (!colony->residual_path)
+		wipe_graph(colony->nodes);
+		if (!colony->residual_path)
 			break ;
 		plug_all_paths(colony->current_flow);
 		compute_distance_superimpose(colony);
 		unplug_all_paths(colony->current_flow);
 		destroy_path_list(&colony->current_flow, 0);
-        colony->current_flow = get_flow_paths(colony, 1);
-        unplug_all_paths(colony->current_flow);
-		//
+		colony->current_flow = get_flow_paths(colony, 1);
+		unplug_all_paths(colony->current_flow);
 		reset_paths(colony->current_flow);
-		saturate_and_distribute(colony, colony->current_flow, 1);
-		//
-        colony->current_running_time =
+		saturate_and_distribute_mk2(colony, colony->current_flow, &colony->m, 1);
+		colony->current_running_time =
 		estimate_running_time_mk2(colony->current_flow);
-        if (colony->current_running_time < colony->min_running_time)
+		if (colony->current_running_time < colony->min_running_time)
 			set_minimum(colony);
-        destroy_path(&colony->residual_path);
-    }
+		destroy_path(&colony->residual_path);
+	}
 }
 
 /*
@@ -89,10 +97,15 @@ go through the assignment and the check list;
 bus error on several arguments on stdin ?
 reads stdin when ./lem-in [nonexistant file];
 investigate extremely low move counts;
+remove -g flag;
 
 SEGFAULT:
-./lem-in maps/invalid/empty_line_no_end_defined
-./lem-in maps/invalid/empty_line_no_tube_to_end 
+0_extra_lines_paths
+12_extra_lines_comparison, etc.
+suspected function free_for_all();
+
+CONDITIONAL JUMPS on invalid maps:
+ants_empty, etc;
 
 get_flow_paths() now has a cut-off for long paths; this is risky, run some tests;
 test the pivot placing strategies;
@@ -114,17 +127,15 @@ int			main(int arg_count, char **arg_values)
 	print_initial_text(lemin.initial_text);
 	colony = get_colony(lemin);
 	initialize_stuff(colony);
-	reset_paths(colony->optimal_flow);
-    get_solution_in_the_first_approximation(colony);
+	reset_paths(colony->current_flow);
+	get_solution_in_the_first_approximation(colony);
 	reset_flow_network(colony);
 	initialize_the_flow_netowrk(colony, colony->optimal_flow);
 	destroy_path_list(&colony->current_flow, 0);
 	colony->current_flow = copy_flow(colony->optimal_flow);
 	refine_solution_via_pivots(colony);
-	//
 	reset_paths(colony->optimal_flow);
-	saturate_and_distribute(colony, colony->optimal_flow, 0);
-	//
+	saturate_and_distribute_mk2(colony, colony->optimal_flow, &colony->m_prime, 0);
 	block_pivots(colony->active_pivots, 0);
 	block_pivots(colony->pivot_nodes, 0);
 	go_forth(colony);

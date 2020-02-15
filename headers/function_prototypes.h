@@ -6,7 +6,7 @@
 /*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 17:33:23 by lcaesar           #+#    #+#             */
-/*   Updated: 2020/02/15 16:02:13 by lcaesar          ###   ########.fr       */
+/*   Updated: 2020/02/15 16:30:58 by lcaesar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,6 @@ void				set_minimum(t_colony *colony);
 void				saturate_and_distribute(t_colony *colony,
 					t_path_list *paths, int numerical);
 void				compute_distance_superimpose(t_colony *colony);
-
-
-void	saturate_and_distribute_mk2(t_colony *colony,
-        t_path_list *paths, int *index, int numerical);
+void				saturate_and_distribute_mk2(t_colony *colony,
+					t_path_list *paths, int *index, int numerical);
 #endif
