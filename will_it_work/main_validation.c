@@ -6,7 +6,7 @@
 /*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 23:01:39 by gemerald          #+#    #+#             */
-/*   Updated: 2020/02/13 21:57:03 by lcaesar          ###   ########.fr       */
+/*   Updated: 2020/02/16 14:00:53 by gemerald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,3 @@ char	*feel_map_file(int ac, char **av, t_lemin *lemin)
 	}
 	return (NULL);
 }
-
-// int		main(int ac, char **av)
-// {
-// 	t_lemin lemin;
-
-// 	if (!lets_read(&lemin, feel_map_file(ac, av, &lemin)))
-// 	{
-// 		free_for_all(&lemin);
-// 		return (err_out());
-// 	}
-// 	ft_putstr("[OK]\n");
-// 	return (0);
-// }
