@@ -6,7 +6,7 @@
 /*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 16:35:00 by lcaesar           #+#    #+#             */
-/*   Updated: 2020/02/15 17:06:31 by lcaesar          ###   ########.fr       */
+/*   Updated: 2020/02/16 14:49:38 by lcaesar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	initialize_stuff(t_colony *colony)
 {
 	colony->ants = spawn_all_ants(colony->start, colony->number_of_ants);
 	colony->current_flow = get_flow_paths(colony, 0);
-	// colony->current_flow = new_path_list(new_path(naive_bfs(colony->start, colony->finish, 0)));
 	if (!colony->current_flow)
 	{
 		write(1, ERROR_MSG, ft_strlen(ERROR_MSG));
@@ -28,9 +27,9 @@ static void	initialize_stuff(t_colony *colony)
 	unplug_all_paths(colony->current_flow);
 	colony->optimal_flow = copy_flow(colony->current_flow);
 	saturate_and_distribute_mk2(colony, colony->current_flow, &colony->m, 1);
-	colony->min_running_time = estimate_running_time_mk2(colony->current_flow);
+	colony->min_running_time = estimate_run_time(colony->current_flow);
 	colony->current_running_time = colony->min_running_time;
-	colony->m_prime = colony->m;
+	colony->m_p = colony->m;
 }
 
 static void	get_solution_in_the_first_approximation(t_colony *colony)
@@ -48,9 +47,9 @@ static void	get_solution_in_the_first_approximation(t_colony *colony)
 		colony->current_flow = get_flow_paths(colony, 1);
 		unplug_all_paths(colony->current_flow);
 		reset_paths(colony->current_flow);
-		saturate_and_distribute_mk2(colony, colony->current_flow, &colony->m, 1);
-		colony->current_running_time =
-		estimate_running_time_mk2(colony->current_flow);
+		saturate_and_distribute_mk2(colony,
+		colony->current_flow, &colony->m, 1);
+		colony->current_running_time = estimate_run_time(colony->current_flow);
 		if (colony->current_running_time < colony->min_running_time)
 			set_minimum(colony);
 		else if (colony->current_running_time > colony->min_running_time)
@@ -80,13 +79,21 @@ static void	refine_solution_via_pivots(t_colony *colony)
 		colony->current_flow = get_flow_paths(colony, 1);
 		unplug_all_paths(colony->current_flow);
 		reset_paths(colony->current_flow);
-		saturate_and_distribute_mk2(colony, colony->current_flow, &colony->m, 1);
+		saturate_and_distribute_mk2(colony,
+		colony->current_flow, &colony->m, 1);
 		colony->current_running_time =
-		estimate_running_time_mk2(colony->current_flow);
+		estimate_run_time(colony->current_flow);
 		if (colony->current_running_time < colony->min_running_time)
 			set_minimum(colony);
 		destroy_path(&colony->residual_path);
 	}
+}
+
+static void	block_and_go(t_colony *colony)
+{
+	block_pivots(colony->active_pivots, 0);
+	block_pivots(colony->pivot_nodes, 0);
+	go_forth(colony);
 }
 
 /*
@@ -99,18 +106,42 @@ reads stdin when ./lem-in [nonexistant file];
 investigate extremely low move counts;
 remove -g flag;
 
-SEGFAULT:
-0_extra_lines_paths
-12_extra_lines_comparison, etc.
-suspected function free_for_all();
-
-CONDITIONAL JUMPS on invalid maps:
-ants_empty, etc;
-
-get_flow_paths() now has a cut-off for long paths; this is risky, run some tests;
 test the pivot placing strategies;
-play around with path initialization; 
+play around with path initialization;
 superimpose_mk2() does not remove edges;
+
+TESTS:
+200 sample size:
+-gfp, cut off, 0-1-2 superimpose:
+⤷ Time average: 0.289s
+⤷ Average: -0.26
+⤷ Min: -7
+⤷ Max: 4
+-g1p, cut off, 0-1-2 superimpose:
+ ⤷ Time average: 0.304s
+  ⤷ Average: -0.21
+  ⤷ Min: -7
+  ⤷ Max: 5
+-gfp, no cut off, 0-1-2 superimpose:
+ ⤷ Time average: 0.370s
+  ⤷ Average: -0.40
+  ⤷ Min: -18
+  ⤷ Max: 3
+-gfp, cut off, 0-1-0 superimpose:
+⤷ Time average: 0.262s
+  ⤷ Average: -0.12
+  ⤷ Min: -32
+  ⤷ Max: 5
+-gfp, no cut off, 0-1-0:
+ ⤷ Time average: 0.333s
+  ⤷ Average: -0.16
+  ⤷ Min: -6
+  ⤷ Max: 5
+-g1p, no cut off, 0-1-0:
+⤷ Time average: 0.324s
+  ⤷ Average: -0.18
+  ⤷ Min: -4
+  ⤷ Max: 5
 */
 
 int			main(int arg_count, char **arg_values)
@@ -135,10 +166,8 @@ int			main(int arg_count, char **arg_values)
 	colony->current_flow = copy_flow(colony->optimal_flow);
 	refine_solution_via_pivots(colony);
 	reset_paths(colony->optimal_flow);
-	saturate_and_distribute_mk2(colony, colony->optimal_flow, &colony->m_prime, 0);
-	block_pivots(colony->active_pivots, 0);
-	block_pivots(colony->pivot_nodes, 0);
-	go_forth(colony);
+	saturate_and_distribute_mk2(colony, colony->optimal_flow, &colony->m_p, 0);
+	block_and_go(colony);
 	if (lemin.print_path)
 		display_all_paths(colony->optimal_flow);
 	return (collect_garbage(lemin, colony));

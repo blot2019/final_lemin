@@ -6,7 +6,7 @@
 /*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 20:40:02 by lcaesar           #+#    #+#             */
-/*   Updated: 2020/02/13 20:44:11 by lcaesar          ###   ########.fr       */
+/*   Updated: 2020/02/16 14:18:10 by lcaesar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ static t_stack	*get_item_queue(t_node *start,
 	return (node_item_queue);
 }
 
-static void	useless_function(t_stack *node_item_queue,
-			t_node *next_node, t_node *finish, int network_flag)
+static void		useless_function(t_stack *node_item_queue,
+				t_node *next_node, t_node *finish, int network_flag)
 {
 	bfs_visit(next_node, node_item_queue, finish, network_flag);
 	free(pop(node_item_queue));

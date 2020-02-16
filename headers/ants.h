@@ -6,7 +6,7 @@
 /*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 17:33:12 by lcaesar           #+#    #+#             */
-/*   Updated: 2020/02/13 20:08:43 by lcaesar          ###   ########.fr       */
+/*   Updated: 2020/02/16 14:17:45 by lcaesar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ struct	s_colony
 	int					number_of_ants;
 	int					number_of_paths;
 	int					m;
-	int					m_prime;
+	int					m_p;
 	int					current_running_time;
 	int					min_running_time;
 	int					distance_to;

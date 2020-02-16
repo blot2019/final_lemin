@@ -6,7 +6,7 @@
 /*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 15:48:34 by lcaesar           #+#    #+#             */
-/*   Updated: 2020/02/15 15:49:46 by lcaesar          ###   ########.fr       */
+/*   Updated: 2020/02/16 14:17:57 by lcaesar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_colony	*get_colony(t_lemin lemin)
 	colony->number_of_ants = lemin.ant_count;
 	colony->number_of_paths = -1;
 	colony->m = -1;
-	colony->m_prime = -1;
+	colony->m_p = -1;
 	colony->current_running_time = -1;
 	colony->min_running_time = -1;
 	colony->distance_to = -1;
