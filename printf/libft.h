@@ -6,7 +6,7 @@
 /*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 16:30:20 by lcaesar           #+#    #+#             */
-/*   Updated: 2020/01/04 12:23:16 by lcaesar          ###   ########.fr       */
+/*   Updated: 2020/02/16 14:01:45 by gemerald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
-
 
 int					get_next_line(const int fd, char **line);
 int					ft_isspace(int c);
