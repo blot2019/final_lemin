@@ -59,13 +59,13 @@ int			init_lemin(t_lemin *lemin, char **spl)
 	lemin->rooms_len = 0;
 	null_pointer_upload(lemin);
 	if (!take_ants(lemin, spl))
-		return (make_free_lemin(lemin));
+		return (0);
 	if (!take_rooms(lemin, spl))
-		return (make_free_lemin(lemin));
+		return (0);
 	hash_table_upload(lemin);
 	if (!check_rooms(lemin))
-		return (make_free_lemin(lemin));
+		return (0);
 	if (!take_links(lemin, spl))
-		return (make_free_lemin(lemin));
+		return (0);
 	return (1);
 }
