@@ -6,7 +6,7 @@
 /*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 21:05:43 by lcaesar           #+#    #+#             */
-/*   Updated: 2020/02/13 21:36:55 by lcaesar          ###   ########.fr       */
+/*   Updated: 2020/02/15 16:34:40 by lcaesar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int			saturate_paths(t_colony *colony, t_path_list *path_list)
 {
 	t_path_list	*current_path;
 	t_path_list	*next_longest_path;
-	
+
 	current_path = path_list;
 	next_longest_path = get_next_longest_path(current_path);
 	if (!next_longest_path)
@@ -100,7 +100,7 @@ int			saturate_paths_numerically(t_colony *colony,
 {
 	t_path_list	*current_path;
 	t_path_list	*next_longest_path;
-	
+
 	current_path = path_list;
 	next_longest_path = get_next_longest_path(current_path);
 	if (!next_longest_path)

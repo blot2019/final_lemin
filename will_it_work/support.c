@@ -6,7 +6,7 @@
 /*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 21:00:43 by lcaesar           #+#    #+#             */
-/*   Updated: 2020/02/13 21:02:06 by lcaesar          ###   ########.fr       */
+/*   Updated: 2020/02/16 14:21:39 by lcaesar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	block_pivots(t_generic_list *pivot_nodes, long block)
 	}
 }
 
-int		estimate_running_time_mk2(t_path_list *paths)
+int		estimate_run_time(t_path_list *paths)
 {
 	t_path_list	*current_path;
 	int			max_effective_length;
