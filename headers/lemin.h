@@ -6,7 +6,7 @@
 /*   By: gemerald <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 15:51:19 by gemerald          #+#    #+#             */
-/*   Updated: 2020/02/15 15:58:27 by gemerald         ###   ########.fr       */
+/*   Updated: 2020/02/16 16:14:55 by gemerald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct				s_room
 {
 	char					*name;
 	int						index;
-	int						hash;
+	unsigned int			hash;
 	int						x_coord;
 	int						y_coord;
 	int						part;
@@ -79,7 +79,7 @@ int							init_lemin(t_lemin *lemin, char **spl);
 int							take_ants(t_lemin *lemin, char **spl);
 int							take_rooms(t_lemin *lemin, char **spl);
 int							take_links(t_lemin *lemin, char **spl);
-int							hash_my_name(char *str, int start, int border);
+unsigned int				hash_my_name(char *str, int start, int border);
 int							create_link_in_room(t_lemin *lemin,\
 							t_hash hash_found);
 void						null_pointer_upload(t_lemin *lemin);
