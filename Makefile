@@ -11,7 +11,9 @@ SRCS_FILES := main_validation.c create_links.c pars_hex.c pars_utils.c structure
 			support.c undo_flow.c waste_of_time.c run.c run_extra_functions.c
 source := $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 
-lib_functions = $(wildcard ./library_routines/*.c)
+LIBF_DIR := library_routines
+LIBF_FILES := ft_itoa.c ft_memcpy.c ft_memmove.c ft_strsplit.c why_int_absolute_value.c why_int_power.c
+lib_functions = $(addprefix $(LIBF_DIR)/, $(LIBF_FILES))
 lib_objects = $(lib_functions:.c=.o)
 
 source_directory = ./will_it_work/
