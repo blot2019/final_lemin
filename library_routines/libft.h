@@ -6,14 +6,13 @@
 /*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 16:30:20 by lcaesar           #+#    #+#             */
-/*   Updated: 2019/09/30 11:56:38 by lcaesar          ###   ########.fr       */
+/*   Updated: 2020/02/16 14:04:10 by gemerald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-// # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
 # include <fcntl.h>
