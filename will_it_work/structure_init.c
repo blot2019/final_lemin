@@ -6,7 +6,7 @@
 /*   By: gemerald <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 23:11:02 by gemerald          #+#    #+#             */
-/*   Updated: 2020/02/15 15:37:59 by lcaesar          ###   ########.fr       */
+/*   Updated: 2020/02/16 16:30:52 by gemerald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int			take_rooms(t_lemin *lemin, char **spl)
 			lemin->rooms[room] = charge_room(spl[y], room, &flag);
 			if (flag)
 			{
-				lemin->rooms_len = (flag == 1 ? room - 1 : room);
+				lemin->rooms_len = (flag == 1 ? room : room + 1);
 				return (0);
 			}
 			lemin->rooms[room].links = NULL;
