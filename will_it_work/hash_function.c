@@ -6,13 +6,13 @@
 /*   By: gemerald <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 22:59:45 by gemerald          #+#    #+#             */
-/*   Updated: 2020/01/27 23:00:34 by gemerald         ###   ########.fr       */
+/*   Updated: 2020/02/16 16:19:18 by gemerald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void		fill_sqr_table(int sqr_table[])
+void					fill_sqr_table(unsigned int sqr_table[])
 {
 	int i;
 
@@ -25,17 +25,15 @@ void		fill_sqr_table(int sqr_table[])
 	}
 }
 
-int			hash_my_name(char *str, int start, int border)
+unsigned int			hash_my_name(char *str, int start, int border)
 {
-	int			len;
-	int			hash;
-	int			i;
-	static int	sqr_table[100];
+	unsigned int			hash;
+	int						i;
+	static unsigned int		sqr_table[100];
 
 	if (!sqr_table[0])
 		fill_sqr_table(sqr_table);
 	i = 0;
-	len = border - start;
 	hash = 0;
 	while (start < border)
 	{
