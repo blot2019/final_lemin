@@ -16,7 +16,7 @@ lib_objects = $(lib_functions:.c=.o)
 
 source_directory = ./will_it_work/
 
-test_flags = -Wall -Wextra
+test_flags = -Wall -Wextra -g
 
 LIB_PRINT := printf/libftprintf.a
 

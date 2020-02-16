@@ -6,7 +6,7 @@
 /*   By: lcaesar <lcaesar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 17:33:23 by lcaesar           #+#    #+#             */
-/*   Updated: 2020/02/15 16:02:13 by lcaesar          ###   ########.fr       */
+/*   Updated: 2020/02/16 14:21:40 by lcaesar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void				superimpose_mk2_forwards(t_colony *colony, t_path *path);
 int					collect_garbage(t_lemin lemin, t_colony *colony);
 void				block_pivots(t_generic_list *pivot_nodes, long block);
 void				print_initial_text(char **initial_text);
-int					estimate_running_time_mk2(t_path_list *paths);
+int					estimate_run_time(t_path_list *paths);
 void				go_forth(t_colony *colony);
 
 void				undo_flow_on_segment(t_path *flow_path,
@@ -122,8 +122,6 @@ void				set_minimum(t_colony *colony);
 void				saturate_and_distribute(t_colony *colony,
 					t_path_list *paths, int numerical);
 void				compute_distance_superimpose(t_colony *colony);
-
-
-void	saturate_and_distribute_mk2(t_colony *colony,
-        t_path_list *paths, int *index, int numerical);
+void				saturate_and_distribute_mk2(t_colony *colony,
+					t_path_list *paths, int *index, int numerical);
 #endif
